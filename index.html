@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,68 +6,139 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mario Dashboard</title>
   <style>
-    body { font-family: sans-serif; margin: 0; padding: 0; background: #f4f4f4; }
-    header { background: #144a85; color: white; padding: 1rem; text-align: center; }
-    main { display: flex; height: calc(100vh - 60px); }
-    .sidebar, .content { padding: 1rem; }
-    .sidebar { width: 25%; background: #ffffff; overflow-y: auto; border-right: 1px solid #ccc; }
-    .content { flex: 1; background: #f9f9f9; overflow-y: auto; }
-    .form-section { background: white; padding: 1rem; margin-bottom: 1rem; border-radius: 6px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
-    input, select, textarea { width: 100%; padding: 0.4rem; margin-bottom: 0.8rem; }
-    iframe, img { width: 100%; height: 400px; border: none; background: #ddd; }
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+    }
+
+    header {
+      background: #144a85;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+
+    main {
+      display: flex;
+      height: calc(100vh - 80px);
+    }
+
+    .sidebar {
+      width: 28%;
+      background: #ffffff;
+      border-left: 4px solid #b3c347;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+
+    .content {
+      width: 72%;
+      display: flex;
+      flex-direction: column;
+      background: #f9f9f9;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+
+    .form-section {
+      background: white;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 6px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.4rem;
+      margin-bottom: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 450px;
+      border: 1px solid #ccc;
+      background: white;
+    }
+
+    h3 {
+      margin-top: 0;
+      color: #144a85;
+    }
+
+    button {
+      background-color: #144a85;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    ul#fileList {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul#fileList li {
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      color: #144a85;
+    }
+
   </style>
 </head>
 <body>
-  <header>
-    <h1>Mario Dashboard</h1>
-  </header>
+  <header>Mario Dashboard</header>
   <main>
     <div class="sidebar">
       <h3>Inbox</h3>
-      <input type="file" id="fileInput" accept="application/pdf,image/*">
+      <input type="file" id="fileInput" accept="application/pdf,image/*" multiple>
       <ul id="fileList"></ul>
     </div>
+
     <div class="content">
       <div class="form-section">
         <h3>Expense Form</h3>
-        <form id="expenseForm">
-          <input type="text" placeholder="Vendor" required>
-          <input type="text" placeholder="Building" required>
-          <input type="date" placeholder="Invoice Date">
-          <input type="text" placeholder="Document Type">
-          <input type="text" placeholder="Document ID">
-          <input type="number" placeholder="Payable Amount">
-          <input type="text" placeholder="Budget Category">
-          <input type="text" placeholder="Expense Type">
-          <input type="text" placeholder="Assignment Period">
-          <textarea placeholder="Expense Details"></textarea>
-          <button type="submit">Save</button>
-        </form>
+        <input type="text" placeholder="Vendor">
+        <input type="text" placeholder="Building">
+        <input type="date">
+        <input type="text" placeholder="Document Type">
+        <input type="text" placeholder="Document ID">
+        <input type="number" placeholder="Payable Amount">
+        <input type="text" placeholder="Budget Category">
+        <input type="text" placeholder="Expense Type">
+        <input type="text" placeholder="Assignment Period">
+        <textarea placeholder="Expense Details"></textarea>
+        <button>Save</button>
       </div>
       <div class="form-section">
         <h3>File Preview</h3>
-        <iframe id="previewFrame"></iframe>
+        <iframe id="filePreview" src=""></iframe>
       </div>
     </div>
   </main>
+
   <script>
     const fileInput = document.getElementById("fileInput");
     const fileList = document.getElementById("fileList");
-    const previewFrame = document.getElementById("previewFrame");
+    const filePreview = document.getElementById("filePreview");
 
     fileInput.addEventListener("change", () => {
-      const file = fileInput.files[0];
-      if (!file) return;
-      const url = URL.createObjectURL(file);
-
-      const li = document.createElement("li");
-      li.textContent = file.name;
-      li.style.cursor = 'pointer';
-      li.onclick = () => {
-        previewFrame.src = url;
-      };
-
-      fileList.appendChild(li);
+      fileList.innerHTML = "";
+      Array.from(fileInput.files).forEach((file, index) => {
+        const li = document.createElement("li");
+        li.textContent = file.name;
+        li.addEventListener("click", () => {
+          filePreview.src = URL.createObjectURL(file);
+        });
+        fileList.appendChild(li);
+      });
     });
   </script>
 </body>
