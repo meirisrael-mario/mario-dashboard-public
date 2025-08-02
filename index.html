@@ -165,3 +165,56 @@
   </script>
 </body>
 </html>
+<!-- OCR from PDF preview using Canvas and Tesseract -->
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.4.120/build/pdf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.1.1/dist/tesseract.min.js"></script>
+
+<script>
+  async function extractTextFromPDF(file) {
+    const pdfData = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: pdfData }).promise;
+    const page = await pdf.getPage(1);
+
+    const viewport = page.getViewport({ scale: 2 });
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+
+    const renderContext = {
+      canvasContext: context,
+      viewport: viewport,
+    };
+
+    await page.render(renderContext).promise;
+
+    // OCR from Canvas
+    const { data: { text } } = await Tesseract.recognize(
+      canvas,
+      'heb+eng',
+      {
+        logger: m => console.log(m)
+      }
+    );
+
+    console.log("OCR Result:", text);
+    autoFillForm(text);
+  }
+
+  function autoFillForm(text) {
+    // הדגמה פשוטה – שים כאן לוגיקה אמיתית לזיהוי שדות
+    if (text.includes("ספק")) {
+      document.querySelector('input[placeholder="שם ספק"]').value = "נמצא: " + text.split('\n')[0];
+    }
+  }
+
+  // Example: Run on file click
+  document.querySelectorAll('.file-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const file = item.fileRef;
+      if (file && file.type === "application/pdf") {
+        extractTextFromPDF(file);
+      }
+    });
+  });
+</script>
