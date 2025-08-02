@@ -7,29 +7,29 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="overflow-hidden">
-  <div class="flex h-screen w-screen">
+  <div class="relative h-screen w-screen overflow-hidden">
 
     <!-- Sidebar -->
     <div id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-gray-900 text-white -translate-x-full transition-transform duration-300 z-40">
-      <button onclick="toggleSidebar()" class="p-4 w-full text-left">✖ סגור</button>
-      <nav class="flex flex-col p-4 space-y-2">
+      <button onclick="toggleSidebar()" class="p-4 w-full text-left text-xl">✖ סגור</button>
+      <nav class="flex flex-col p-4 space-y-2 text-right">
         <button>הגדרות</button>
         <button>ספקים</button>
         <button>בניינים</button>
-        <button>➕ הוסף בניין</button>
+        <button class="text-purple-400">➕ הוסף בניין</button>
       </nav>
     </div>
 
-    <!-- Sidebar Toggle -->
-    <button onclick="toggleSidebar()" class="fixed top-4 left-4 z-50 bg-gray-700 text-white px-3 py-1 rounded">☰</button>
+    <!-- Sidebar Toggle Button -->
+    <button id="openSidebarBtn" onclick="toggleSidebar()" class="fixed top-4 left-4 z-50 bg-gray-800 text-white px-3 py-2 rounded shadow">☰</button>
 
-    <div class="flex flex-1 p-4 gap-4">
+    <div class="flex h-full w-full p-4 gap-4">
 
       <!-- Inbox -->
-      <div class="w-1/5 bg-gray-100 p-4 overflow-y-auto max-h-full">
+      <div class="w-1/5 bg-gray-100 p-4 overflow-y-auto max-h-full rounded">
         <button class="w-full bg-blue-500 text-white py-2 rounded mb-4">בחר או העלה קובץ</button>
         <ul class="space-y-2">
-          <li class="flex justify-between items-center bg-white p-2 shadow cursor-pointer">
+          <li class="flex justify-between items-center bg-white p-2 shadow cursor-pointer rounded">
             <span>שם קובץ</span>
             <button class="text-red-500">🗑️</button>
           </li>
@@ -37,9 +37,9 @@
       </div>
 
       <!-- Preview -->
-      <div class="flex-1 bg-gray-200 p-4 flex flex-col items-center justify-center">
-        <div class="border w-full h-full flex items-center justify-center relative">
-          <span class="absolute top-2 right-2">חשבונית.pdf</span>
+      <div class="flex-1 bg-gray-200 p-4 flex flex-col items-center justify-center rounded">
+        <div class="border w-full h-full flex items-center justify-center relative bg-white rounded">
+          <span class="absolute top-2 right-2 text-gray-700">חשבונית.pdf</span>
           <div class="text-xl text-gray-600">[תצוגה מקדימה]</div>
           <div class="absolute bottom-4 right-4 space-x-2">
             <button class="bg-white px-2">➖</button>
@@ -78,7 +78,7 @@
         <div class="bg-white p-4 shadow rounded space-y-2">
           <h2 class="text-right text-lg font-bold">5 חשבוניות אחרונות</h2>
           <ul class="space-y-1">
-            <li class="flex justify-between items-center bg-gray-50 p-2">
+            <li class="flex justify-between items-center bg-gray-50 p-2 rounded">
               <span>חשבונית 1</span>
               <div class="space-x-2">
                 <button>👁️</button>
@@ -94,8 +94,17 @@
   <script>
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
-      sidebar.classList.toggle('translate-x-0');
-      sidebar.classList.toggle('-translate-x-full');
+      const toggleBtn = document.getElementById('openSidebarBtn');
+      const isOpen = sidebar.classList.contains('translate-x-0');
+      if (isOpen) {
+        sidebar.classList.remove('translate-x-0');
+        sidebar.classList.add('-translate-x-full');
+        toggleBtn.classList.remove('hidden');
+      } else {
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.add('translate-x-0');
+        toggleBtn.classList.add('hidden');
+      }
     }
   </script>
 </body>
