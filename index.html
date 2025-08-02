@@ -16,7 +16,7 @@
 
     <!-- Sidebar -->
     <div id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-gray-900 text-white -translate-x-full transition-transform duration-300 z-40">
-      <button onclick="toggleSidebar()" class="p-4 w-full text-left text-xl">✖ סגור</button>
+      <button id="closeSidebarBtn" class="p-4 w-full text-left text-xl">✖ סגור</button>
       <nav class="flex flex-col p-4 space-y-2 text-right">
         <button>הגדרות</button>
         <button>ספקים</button>
@@ -26,7 +26,7 @@
     </div>
 
     <!-- Sidebar Toggle Button -->
-    <button id="openSidebarBtn" onclick="toggleSidebar()" class="fixed top-4 left-4 z-50 bg-gray-800 text-white px-3 py-2 rounded shadow">☰</button>
+    <button id="openSidebarBtn" class="fixed top-4 left-4 z-50 bg-gray-800 text-white px-3 py-2 rounded shadow">☰</button>
 
     <!-- Main Layout -->
     <div class="flex h-full w-full p-4 gap-4">
@@ -99,26 +99,26 @@
     </div>
   </div>
 
-  <script>
+  <script defer>
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
-      const toggleBtn = document.getElementById('openSidebarBtn');
+      const openBtn = document.getElementById('openSidebarBtn');
       const isOpen = sidebar.classList.contains('translate-x-0');
 
       if (isOpen) {
         sidebar.classList.remove('translate-x-0');
         sidebar.classList.add('-translate-x-full');
-        toggleBtn.classList.remove('hidden');
+        openBtn.classList.remove('hidden');
       } else {
         sidebar.classList.remove('-translate-x-full');
         sidebar.classList.add('translate-x-0');
-        toggleBtn.classList.add('hidden');
+        openBtn.classList.add('hidden');
       }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      const sidebar = document.getElementById('sidebar');
-      sidebar.classList.add('-translate-x-full');
+      document.getElementById('closeSidebarBtn').addEventListener('click', toggleSidebar);
+      document.getElementById('openSidebarBtn').addEventListener('click', toggleSidebar);
     });
   </script>
 </body>
