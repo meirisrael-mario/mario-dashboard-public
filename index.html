@@ -35,15 +35,10 @@
 
     <!-- Preview -->
     <div class="flex-1 bg-white p-4 flex flex-col items-center justify-center rounded shadow">
-      <span class="self-end text-sm text-gray-600 mb-2">חשבונית.pdf</span>
+      <span class="self-end text-sm text-gray-600 mb-2" id="previewLabel">אין קובץ</span>
       <div class="border w-full h-full flex items-center justify-center relative bg-gray-100 rounded">
-        <div class="text-xl text-gray-500">[תצוגה מקדימה]</div>
-        <div class="absolute bottom-4 right-4 space-x-2">
-          <button class="bg-white px-2">➖</button>
-          <button class="bg-white px-2">➕</button>
-          <button class="bg-white px-2">⬆️</button>
-          <button class="bg-white px-2">⬇️</button>
-        </div>
+        <iframe id="previewFrame" class="w-full h-full rounded" style="display: none;" frameborder="0"></iframe>
+        <div id="previewPlaceholder" class="text-xl text-gray-500">[תצוגה מקדימה]</div>
       </div>
     </div>
 
@@ -88,18 +83,35 @@
     const dropZone = document.getElementById("dropZone");
     const fileInput = document.getElementById("fileInput");
     const fileList = document.getElementById("fileList");
+    const previewFrame = document.getElementById("previewFrame");
+    const previewLabel = document.getElementById("previewLabel");
+    const previewPlaceholder = document.getElementById("previewPlaceholder");
+
+    const uploadedFiles = [];
 
     function handleFile(files) {
       for (const file of files) {
+        uploadedFiles.push(file);
+
         const li = document.createElement("li");
-        li.className = "flex justify-between items-center bg-gray-100 p-2 shadow rounded";
+        li.className = "flex justify-between items-center bg-gray-100 p-2 shadow rounded cursor-pointer";
 
         const span = document.createElement("span");
         span.textContent = file.name;
+        span.className = "flex-1";
+
+        // הצגת תצוגה מקדימה בלחיצה על שם הקובץ
+        span.onclick = () => {
+          const url = URL.createObjectURL(file);
+          previewFrame.src = url;
+          previewFrame.style.display = "block";
+          previewPlaceholder.style.display = "none";
+          previewLabel.textContent = file.name;
+        };
 
         const deleteBtn = document.createElement("button");
         deleteBtn.textContent = "🗑️";
-        deleteBtn.className = "text-red-500";
+        deleteBtn.className = "text-red-500 ml-2";
         deleteBtn.onclick = () => li.remove();
 
         li.appendChild(span);
