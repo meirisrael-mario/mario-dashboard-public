@@ -15,7 +15,6 @@
   </style>
 </head>
 <body class="overflow-hidden bg-gray-50">
-
   <div class="flex h-screen w-screen p-4 gap-4">
 
     <!-- Inbox -->
@@ -50,16 +49,13 @@
 
     <!-- Form + Last Invoices -->
     <div class="w-2/5 flex flex-col gap-4">
-
       <!-- Form -->
       <div class="bg-white p-4 shadow rounded space-y-3">
         <h2 class="text-right text-lg font-bold mb-2">טופס רישום הוצאה</h2>
-
         <div class="flex gap-2">
           <input class="w-full border p-2 rounded" placeholder="שם ספק" />
           <button class="text-green-600">➕</button>
         </div>
-
         <input class="w-full border p-2 rounded" placeholder="שם הבניין" />
         <input class="w-full border p-2 rounded" placeholder="תאריך החשבונית" />
         <input class="w-full border p-2 rounded" placeholder="סוג החשבונית" />
@@ -69,7 +65,6 @@
         <input class="w-full border p-2 rounded" placeholder="סוג תקציב" />
         <input class="w-full border p-2 rounded" placeholder="סיווג הוצאה" />
         <input class="w-full border p-2 rounded" placeholder="תקופת שיוך" />
-
         <button class="w-full bg-green-500 text-white py-2 mt-2 rounded">שמור</button>
       </div>
 
@@ -98,7 +93,17 @@
       for (const file of files) {
         const li = document.createElement("li");
         li.className = "flex justify-between items-center bg-gray-100 p-2 shadow rounded";
-        li.innerHTML = `<span>${file.name}</span><button class="text-red-500">🗑️</button>`;
+
+        const span = document.createElement("span");
+        span.textContent = file.name;
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "🗑️";
+        deleteBtn.className = "text-red-500";
+        deleteBtn.onclick = () => li.remove();
+
+        li.appendChild(span);
+        li.appendChild(deleteBtn);
         fileList.appendChild(li);
       }
     }
@@ -122,6 +127,5 @@
       handleFile(e.dataTransfer.files);
     });
   </script>
-
 </body>
 </html>
