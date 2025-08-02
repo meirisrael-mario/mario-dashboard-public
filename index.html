@@ -81,6 +81,33 @@
       </div>
     </div>
   </div>
+<script>
+  function handleFile(files) {
+    const list = document.getElementById("fileList");
+    for (const file of files) {
+      const li = document.createElement("li");
+      li.className = "flex justify-between items-center bg-gray-100 p-2 shadow rounded";
+      li.innerHTML = `<span>${file.name}</span><button class="text-red-500">🗑️</button>`;
+      list.appendChild(li);
+    }
+  }
+
+  const dropZone = document.getElementById("dropZone");
+  dropZone.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    dropZone.classList.add("bg-blue-50");
+  });
+
+  dropZone.addEventListener("dragleave", () => {
+    dropZone.classList.remove("bg-blue-50");
+  });
+
+  dropZone.addEventListener("drop", (e) => {
+    e.preventDefault();
+    dropZone.classList.remove("bg-blue-50");
+    handleFile(e.dataTransfer.files);
+  });
+</script>
 
 </body>
 </html>
