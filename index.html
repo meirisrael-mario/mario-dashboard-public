@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>מריו דשבורד</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
   <style>
     body {
       font-family: sans-serif;
@@ -49,18 +50,18 @@
       <div class="bg-white p-4 shadow rounded space-y-3">
         <h2 class="text-right text-lg font-bold mb-2">טופס רישום הוצאה</h2>
         <div class="flex gap-2">
-          <input class="w-full border p-2 rounded" placeholder="שם ספק" />
+          <input id="supplierInput" class="w-full border p-2 rounded" placeholder="שם ספק" />
           <button class="text-green-600">➕</button>
         </div>
-        <input class="w-full border p-2 rounded" placeholder="שם הבניין" />
-        <input class="w-full border p-2 rounded" placeholder="תאריך החשבונית" />
-        <input class="w-full border p-2 rounded" placeholder="סוג החשבונית" />
-        <input class="w-full border p-2 rounded" placeholder="מספר החשבונית" />
-        <input class="w-full border p-2 rounded" placeholder="פירוט ההוצאה" />
-        <input class="w-full border p-2 rounded" placeholder="סכום לתשלום" />
-        <input class="w-full border p-2 rounded" placeholder="סוג תקציב" />
-        <input class="w-full border p-2 rounded" placeholder="סיווג הוצאה" />
-        <input class="w-full border p-2 rounded" placeholder="תקופת שיוך" />
+        <input id="buildingInput" class="w-full border p-2 rounded" placeholder="שם הבניין" />
+        <input id="dateInput" class="w-full border p-2 rounded" placeholder="תאריך החשבונית" />
+        <input id="typeInput" class="w-full border p-2 rounded" placeholder="סוג החשבונית" />
+        <input id="numberInput" class="w-full border p-2 rounded" placeholder="מספר החשבונית" />
+        <input id="detailsInput" class="w-full border p-2 rounded" placeholder="פירוט ההוצאה" />
+        <input id="amountInput" class="w-full border p-2 rounded" placeholder="סכום לתשלום" />
+        <input id="budgetTypeInput" class="w-full border p-2 rounded" placeholder="סוג תקציב" />
+        <input id="categoryInput" class="w-full border p-2 rounded" placeholder="סיווג הוצאה" />
+        <input id="periodInput" class="w-full border p-2 rounded" placeholder="תקופת שיוך" />
         <button class="w-full bg-green-500 text-white py-2 mt-2 rounded">שמור</button>
       </div>
 
@@ -91,6 +92,15 @@
 
     const uploadedFiles = [];
 
+    function runOCR(file) {
+      Tesseract.recognize(file, 'heb', {
+        logger: m => console.log(m)
+      }).then(({ data: { text } }) => {
+        console.log("OCR text:", text);
+        // בשלב זה נריץ רק קונסול. בהמשך נמלא שדות בפועל.
+      });
+    }
+
     function handleFile(files) {
       for (const file of files) {
         uploadedFiles.push(file);
@@ -102,7 +112,6 @@
         span.textContent = file.name;
         span.className = "flex-1";
 
-        // הצגת תצוגה מקדימה בלחיצה על שם הקובץ
         span.onclick = () => {
           const url = URL.createObjectURL(file);
           previewLabel.textContent = file.name;
@@ -120,6 +129,8 @@
             previewPlaceholder.textContent = "לא ניתן להציג תצוגה מקדימה";
             previewPlaceholder.style.display = "block";
           }
+
+          runOCR(file);
         };
 
         const deleteBtn = document.createElement("button");
