@@ -9,7 +9,7 @@
 <body class="overflow-hidden">
   <div class="flex h-screen w-screen">
 
-    <!-- Sidebar (נסתר כברירת מחדל) -->
+    <!-- Sidebar -->
     <div id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-gray-900 text-white -translate-x-full transition-transform duration-300 z-40">
       <button onclick="toggleSidebar()" class="p-4 w-full text-left">✖ סגור</button>
       <nav class="flex flex-col p-4 space-y-2">
@@ -20,7 +20,7 @@
       </nav>
     </div>
 
-    <!-- כפתור פתיחה של הסיידבר -->
+    <!-- Sidebar Toggle -->
     <button onclick="toggleSidebar()" class="fixed top-4 left-4 z-50 bg-gray-700 text-white px-3 py-1 rounded">☰</button>
 
     <div class="flex flex-1 p-4 gap-4">
@@ -33,7 +33,6 @@
             <span>שם קובץ</span>
             <button class="text-red-500">🗑️</button>
           </li>
-          <!-- שורות נוספות יתווספו דינמית -->
         </ul>
       </div>
 
@@ -55,22 +54,27 @@
       <div class="w-2/5 flex flex-col gap-4">
         <!-- טופס -->
         <div class="bg-white p-4 shadow rounded space-y-2">
-          <h2 class="text-right text-lg font-bold">רישום הוצאה</h2>
+          <h2 class="text-right text-lg font-bold">טופס רישום הוצאה</h2>
+
           <div class="flex gap-2">
             <input class="w-full border p-2" placeholder="שם ספק" />
             <button class="text-green-600">➕</button>
           </div>
-          <input class="w-full border p-2" placeholder="בניין" />
-          <input class="w-full border p-2" placeholder="תאריך" />
-          <input class="w-full border p-2" placeholder="סכום" />
-          <div class="flex gap-2">
-            <input class="w-3/5 border p-2" placeholder="תיאור" />
-            <input class="w-2/5 border p-2" placeholder="מידע נוסף" />
-          </div>
+
+          <input class="w-full border p-2" placeholder="שם הבניין" />
+          <input class="w-full border p-2" placeholder="תאריך החשבונית" />
+          <input class="w-full border p-2" placeholder="סוג החשבונית" />
+          <input class="w-full border p-2" placeholder="מספר החשבונית" />
+          <input class="w-full border p-2" placeholder="פירוט ההוצאה" />
+          <input class="w-full border p-2" placeholder="סכום לתשלום" />
+          <input class="w-full border p-2" placeholder="סוג תקציב" />
+          <input class="w-full border p-2" placeholder="סיווג הוצאה" />
+          <input class="w-full border p-2" placeholder="תקופת שיוך" />
+
           <button class="w-full bg-green-500 text-white py-2 mt-2 rounded">שמור</button>
         </div>
 
-        <!-- חשבוניות אחרונות -->
+        <!-- 5 חשבוניות אחרונות -->
         <div class="bg-white p-4 shadow rounded space-y-2">
           <h2 class="text-right text-lg font-bold">5 חשבוניות אחרונות</h2>
           <ul class="space-y-1">
@@ -81,7 +85,6 @@
                 <button class="text-red-500">🗑️</button>
               </div>
             </li>
-            <!-- שורות נוספות -->
           </ul>
         </div>
       </div>
