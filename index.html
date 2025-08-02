@@ -9,6 +9,9 @@
     body {
       font-family: sans-serif;
     }
+    input[type="file"] {
+      display: none;
+    }
   </style>
 </head>
 <body class="overflow-hidden bg-gray-50">
@@ -18,13 +21,17 @@
     <!-- Inbox -->
     <div class="w-1/5 bg-white p-4 rounded shadow overflow-y-auto max-h-full">
       <h2 class="text-lg font-bold mb-4 text-blue-700">דואר נכנס</h2>
-      <button class="w-full bg-blue-500 text-white py-2 rounded mb-4">בחר או העלה קובץ</button>
-      <ul class="space-y-2">
-        <li class="flex justify-between items-center bg-gray-100 p-2 shadow rounded cursor-pointer">
-          <span>שם קובץ</span>
-          <button class="text-red-500">🗑️</button>
-        </li>
-      </ul>
+
+      <label for="fileInput" class="w-full bg-blue-500 text-white py-2 rounded mb-4 block text-center cursor-pointer">
+        בחר או העלה קובץ
+      </label>
+      <input type="file" id="fileInput" multiple />
+
+      <div id="dropZone" class="border-2 border-dashed border-blue-300 p-4 rounded text-center text-gray-500">
+        גרור קובץ לכאן
+      </div>
+
+      <ul id="fileList" class="space-y-2 mt-4"></ul>
     </div>
 
     <!-- Preview -->
@@ -81,33 +88,40 @@
       </div>
     </div>
   </div>
-<script>
-  function handleFile(files) {
-    const list = document.getElementById("fileList");
-    for (const file of files) {
-      const li = document.createElement("li");
-      li.className = "flex justify-between items-center bg-gray-100 p-2 shadow rounded";
-      li.innerHTML = `<span>${file.name}</span><button class="text-red-500">🗑️</button>`;
-      list.appendChild(li);
+
+  <script>
+    const dropZone = document.getElementById("dropZone");
+    const fileInput = document.getElementById("fileInput");
+    const fileList = document.getElementById("fileList");
+
+    function handleFile(files) {
+      for (const file of files) {
+        const li = document.createElement("li");
+        li.className = "flex justify-between items-center bg-gray-100 p-2 shadow rounded";
+        li.innerHTML = `<span>${file.name}</span><button class="text-red-500">🗑️</button>`;
+        fileList.appendChild(li);
+      }
     }
-  }
 
-  const dropZone = document.getElementById("dropZone");
-  dropZone.addEventListener("dragover", (e) => {
-    e.preventDefault();
-    dropZone.classList.add("bg-blue-50");
-  });
+    fileInput.addEventListener("change", (e) => {
+      handleFile(e.target.files);
+    });
 
-  dropZone.addEventListener("dragleave", () => {
-    dropZone.classList.remove("bg-blue-50");
-  });
+    dropZone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dropZone.classList.add("bg-blue-50");
+    });
 
-  dropZone.addEventListener("drop", (e) => {
-    e.preventDefault();
-    dropZone.classList.remove("bg-blue-50");
-    handleFile(e.dataTransfer.files);
-  });
-</script>
+    dropZone.addEventListener("dragleave", () => {
+      dropZone.classList.remove("bg-blue-50");
+    });
+
+    dropZone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      dropZone.classList.remove("bg-blue-50");
+      handleFile(e.dataTransfer.files);
+    });
+  </script>
 
 </body>
 </html>
