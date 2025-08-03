@@ -124,18 +124,22 @@ function handleFile(files) {
 }
 
 fileInput.addEventListener("change", (e) => handleFile(e.target.files));
-dropZone.addEventListener("dragover", e => { e.preventDefault(); dropZone.classList.add("bg-blue-50"); });
-dropZone.addEventListener("dragleave", () => dropZone.classList.remove("bg-blue-50"));
 dropZone.addEventListener("drop", e => {
   e.preventDefault();
   dropZone.classList.remove("bg-blue-50");
   handleFile(e.dataTransfer.files);
+});
+
+// זה צריך לעמוד לבד, בסוף הקובץ:
 document.addEventListener("DOMContentLoaded", () => {
-  const plusBtn = document.querySelector("button.text-green-600");
+  const plusBtn = document.getElementById("addSupplierBtn");
   const supplierCard = document.getElementById("supplierCard");
 
-  plusBtn.addEventListener("click", () => {
-    supplierCard.classList.toggle("hidden");
-  });
+  if (plusBtn && supplierCard) {
+    plusBtn.addEventListener("click", () => {
+      supplierCard.classList.toggle("hidden");
+    });
+  }
 });
+
 
