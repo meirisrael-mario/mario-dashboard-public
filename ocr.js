@@ -138,8 +138,13 @@ document.addEventListener("DOMContentLoaded", () => {
   if (plusBtn && supplierCard) {
     plusBtn.addEventListener("click", () => {
       supplierCard.classList.toggle("hidden");
-    });
-  }
+   document.getElementById("openSuppliers").addEventListener("click", () => {
+  alert("תיקיית ספקים תיפתח כאן בהמשך (TODO)");
+  // בעתיד: נפתח רשימת קבצי ספקים / טבלה
+});
+
+document.getElementById("openClients").addEventListener("click", () => {
+  alert("תיקיית לקוחות תיפתח כאן בהמשך (TODO)");
 });
 
 
