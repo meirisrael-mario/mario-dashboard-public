@@ -105,7 +105,7 @@ function handleFile(files) {
         previewPlaceholder.style.display = "block";
       }
 
-      runOCR(file); // OCR רץ אוטומטית
+      runOCR(file);
     };
 
     const deleteBtn = document.createElement("button");
@@ -117,20 +117,24 @@ function handleFile(files) {
     li.appendChild(deleteBtn);
     fileList.appendChild(li);
 
-    // טריגר OCR כבר בהעלאה, בלי לחכות ללחיצה
-    const url = URL.createObjectURL(file);
     runOCR(file);
   }
 }
 
 fileInput.addEventListener("change", (e) => handleFile(e.target.files));
+dropZone.addEventListener("dragover", e => {
+  e.preventDefault();
+  dropZone.classList.add("bg-blue-50");
+});
+dropZone.addEventListener("dragleave", () => {
+  dropZone.classList.remove("bg-blue-50");
+});
 dropZone.addEventListener("drop", e => {
   e.preventDefault();
   dropZone.classList.remove("bg-blue-50");
   handleFile(e.dataTransfer.files);
 });
 
-// זה צריך לעמוד לבד, בסוף הקובץ:
 document.addEventListener("DOMContentLoaded", () => {
   const plusBtn = document.getElementById("addSupplierBtn");
   const supplierCard = document.getElementById("supplierCard");
@@ -138,43 +142,39 @@ document.addEventListener("DOMContentLoaded", () => {
   if (plusBtn && supplierCard) {
     plusBtn.addEventListener("click", () => {
       supplierCard.classList.toggle("hidden");
-   document.getElementById("openSuppliers").addEventListener("click", () => {
-  alert("תיקיית ספקים תיפתח כאן בהמשך (TODO)");
-  // בעתיד: נפתח רשימת קבצי ספקים / טבלה
-});
-
-document.getElementById("openClients").addEventListener("click", () => {
-  alert("תיקיית לקוחות תיפתח כאן בהמשך (TODO)");
-document.getElementById("saveSupplierBtn").addEventListener("click", () => {
-  const inputs = document.querySelectorAll("#supplierCard input");
-
-  const supplier = {
-    name: inputs[0].value,
-    businessId: inputs[1].value,
-    address: inputs[2].value,
-    contact: inputs[3].value,
-    phone: inputs[4].value,
-    email: inputs[5].value,
-  };
-
-  // יצירת קובץ JSON ופתיחת הורדה
-  const blob = new Blob([JSON.stringify(supplier, null, 2)], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `${supplier.name || 'supplier'}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
-
-  // מילוי שדה טופס בשם הספק
-  document.getElementById("supplierInput").value = supplier.name;
-
-  // סגירת כרטיס ספק
-  document.getElementById("supplierCard").classList.add("hidden");
-
-  // הודעה למשתמש
-  alert("ספק נשמר בהצלחה");
+    });
   }
+
+  document.getElementById("openSuppliers").addEventListener("click", () => {
+    alert("תיקיית ספקים תיפתח כאן בהמשך (TODO)");
+  });
+
+  document.getElementById("openClients").addEventListener("click", () => {
+    alert("תיקיית לקוחות תיפתח כאן בהמשך (TODO)");
+  });
+
+  document.getElementById("saveSupplierBtn").addEventListener("click", () => {
+    const inputs = document.querySelectorAll("#supplierCard input");
+
+    const supplier = {
+      name: inputs[0].value,
+      businessId: inputs[1].value,
+      address: inputs[2].value,
+      contact: inputs[3].value,
+      phone: inputs[4].value,
+      email: inputs[5].value,
+    };
+
+    const blob = new Blob([JSON.stringify(supplier, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${supplier.name || 'supplier'}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+
+    document.getElementById("supplierInput").value = supplier.name;
+    document.getElementById("supplierCard").classList.add("hidden");
+    alert("ספק נשמר בהצלחה");
+  });
 });
-
-
