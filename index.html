@@ -18,7 +18,7 @@
 </head>
 <body class="overflow-hidden bg-gray-50">
 
-  <div class="text-xs text-gray-400 absolute top-2 left-2">ver.001</div>
+  <div class="text-xs text-gray-400 absolute top-2 left-2">ver.002</div>
 
   <div class="flex h-screen w-screen p-4 gap-4">
 
@@ -122,9 +122,11 @@
     }
 
     function autoFillForm(text) {
-      // דוגמה פשוטה בלבד
-      if (text.includes("ספק")) {
-        document.querySelector('input[placeholder="שם ספק"]').value = "נמצא: " + text.split('\n')[0];
+      // דוגמה פשוטה בלבד – מחפש שם ספק לפי טקסט מהשורה הראשונה שמכילה "לכבוד" או "חשבונית"
+      const lines = text.split('\n');
+      const match = lines.find(line => /לכבוד|ספק|חשבונית/.test(line));
+      if (match) {
+        document.getElementById("supplierInput").value = match.trim();
       }
     }
 
