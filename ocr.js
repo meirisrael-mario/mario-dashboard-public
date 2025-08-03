@@ -174,6 +174,7 @@ document.getElementById("saveSupplierBtn").addEventListener("click", () => {
 
   // הודעה למשתמש
   alert("ספק נשמר בהצלחה");
+  }
 });
 
 
