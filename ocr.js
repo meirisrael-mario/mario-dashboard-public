@@ -134,7 +134,6 @@ dropZone.addEventListener("drop", e => {
   dropZone.classList.remove("bg-blue-50");
   handleFile(e.dataTransfer.files);
 });
-
 document.addEventListener("DOMContentLoaded", () => {
   const plusBtn = document.getElementById("addSupplierBtn");
   const supplierCard = document.getElementById("supplierCard");
@@ -145,36 +144,47 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  document.getElementById("openSuppliers").addEventListener("click", () => {
-    alert("תיקיית ספקים תיפתח כאן בהמשך (TODO)");
-  });
+  const openSuppliers = document.getElementById("openSuppliers");
+  const openClients = document.getElementById("openClients");
+  const saveSupplierBtn = document.getElementById("saveSupplierBtn");
 
-  document.getElementById("openClients").addEventListener("click", () => {
-    alert("תיקיית לקוחות תיפתח כאן בהמשך (TODO)");
-  });
+  if (openSuppliers) {
+    openSuppliers.addEventListener("click", () => {
+      alert("תיקיית ספקים תיפתח כאן בהמשך (TODO)");
+    });
+  }
 
-  document.getElementById("saveSupplierBtn").addEventListener("click", () => {
-    const inputs = document.querySelectorAll("#supplierCard input");
+  if (openClients) {
+    openClients.addEventListener("click", () => {
+      alert("תיקיית לקוחות תיפתח כאן בהמשך (TODO)");
+    });
+  }
 
-    const supplier = {
-      name: inputs[0].value,
-      businessId: inputs[1].value,
-      address: inputs[2].value,
-      contact: inputs[3].value,
-      phone: inputs[4].value,
-      email: inputs[5].value,
-    };
+  if (saveSupplierBtn) {
+    saveSupplierBtn.addEventListener("click", () => {
+      const inputs = document.querySelectorAll("#supplierCard input");
 
-    const blob = new Blob([JSON.stringify(supplier, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${supplier.name || 'supplier'}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
+      const supplier = {
+        name: inputs[0].value,
+        businessId: inputs[1].value,
+        address: inputs[2].value,
+        contact: inputs[3].value,
+        phone: inputs[4].value,
+        email: inputs[5].value,
+      };
 
-    document.getElementById("supplierInput").value = supplier.name;
-    document.getElementById("supplierCard").classList.add("hidden");
-    alert("ספק נשמר בהצלחה");
-  });
+      const blob = new Blob([JSON.stringify(supplier, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${supplier.name || 'supplier'}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+
+      document.getElementById("supplierInput").value = supplier.name;
+      document.getElementById("supplierCard").classList.add("hidden");
+      alert("ספק נשמר בהצלחה");
+    });
+  }
 });
+
