@@ -1,11 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // פתיחת/סגירת כרטיס ספק
   const plusBtn = document.getElementById("addSupplierBtn");
   const supplierCard = document.getElementById("supplierCard");
 
   if (plusBtn && supplierCard) {
     plusBtn.addEventListener("click", () => {
       supplierCard.classList.toggle("hidden");
+    });
+  }
+});
+
     });
   }
 
