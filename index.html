@@ -18,7 +18,7 @@
 </head>
 <body class="overflow-hidden bg-gray-50">
 
-  <div class="text-xs text-gray-400 absolute top-2 left-2">ver.005</div>
+  <div class="text-xs text-gray-400 absolute top-2 left-2">ver.006</div>
 
   <div class="flex h-screen w-screen p-4 gap-4">
 
@@ -36,14 +36,14 @@
       </div>
 
       <ul id="fileList" class="space-y-2 mt-4"></ul>
+
       <hr class="my-4">
 
-<div class="space-y-2">
-  <h3 class="text-sm font-bold text-gray-700">תיקיות</h3>
-  <a href="#" class="block text-blue-600 hover:underline" id="openSuppliers">📁 ספקים</a>
-  <a href="#" class="block text-blue-600 hover:underline" id="openClients">📁 לקוחות</a>
-</div>
-
+      <div class="space-y-2">
+        <h3 class="text-sm font-bold text-gray-700">תיקיות</h3>
+        <a href="#" class="block text-blue-600 hover:underline" id="openSuppliers">📁 ספקים</a>
+        <a href="#" class="block text-blue-600 hover:underline" id="openClients">📁 לקוחות</a>
+      </div>
     </div>
 
     <!-- Preview -->
@@ -64,18 +64,19 @@
         <div class="flex gap-2">
           <input id="supplierInput" class="w-full border p-2 rounded" placeholder="שם ספק" />
           <button id="addSupplierBtn" class="text-green-600">➕</button>
-          <div id="supplierCard" class="bg-gray-100 p-4 mt-2 rounded shadow space-y-2 hidden">
-  <h3 class="text-sm font-bold text-gray-700">הוספת ספק חדש</h3>
-  <input class="w-full border p-2 rounded" placeholder="שם עסק / חברה" />
-  <input class="w-full border p-2 rounded" placeholder="ח.פ / מספר עוסק" />
-  <input class="w-full border p-2 rounded" placeholder="כתובת" />
-  <input class="w-full border p-2 rounded" placeholder="איש קשר" />
-  <input class="w-full border p-2 rounded" placeholder="טלפון / נייד" />
-  <input class="w-full border p-2 rounded" placeholder="אימייל" />
-<button id="saveSupplierBtn" class="w-full bg-blue-500 text-white py-1 rounded">שמור ספק</button>
-</div>
-
         </div>
+
+        <div id="supplierCard" class="bg-gray-100 p-4 mt-2 rounded shadow space-y-2 hidden">
+          <h3 class="text-sm font-bold text-gray-700">הוספת ספק חדש</h3>
+          <input class="w-full border p-2 rounded" placeholder="שם עסק / חברה" />
+          <input class="w-full border p-2 rounded" placeholder="ח.פ / מספר עוסק" />
+          <input class="w-full border p-2 rounded" placeholder="כתובת" />
+          <input class="w-full border p-2 rounded" placeholder="איש קשר" />
+          <input class="w-full border p-2 rounded" placeholder="טלפון / נייד" />
+          <input class="w-full border p-2 rounded" placeholder="אימייל" />
+          <button id="saveSupplierBtn" class="w-full bg-blue-500 text-white py-1 rounded">שמור ספק</button>
+        </div>
+
         <input id="buildingInput" class="w-full border p-2 rounded" placeholder="שם הבניין" />
         <input id="dateInput" class="w-full border p-2 rounded" placeholder="תאריך החשבונית" />
         <input id="typeInput" class="w-full border p-2 rounded" placeholder="סוג החשבונית" />
@@ -104,4 +105,7 @@
     </div>
   </div>
 
-<script src="ocr.js"></script>
+  <script src="ocr.js"></script>
+  <script src="ui.js"></script>
+</body>
+</html>
