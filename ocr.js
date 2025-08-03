@@ -145,6 +145,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.getElementById("openClients").addEventListener("click", () => {
   alert("תיקיית לקוחות תיפתח כאן בהמשך (TODO)");
+document.getElementById("saveSupplierBtn").addEventListener("click", () => {
+  const inputs = document.querySelectorAll("#supplierCard input");
+
+  const supplier = {
+    name: inputs[0].value,
+    businessId: inputs[1].value,
+    address: inputs[2].value,
+    contact: inputs[3].value,
+    phone: inputs[4].value,
+    email: inputs[5].value,
+  };
+
+  // יצירת קובץ JSON ופתיחת הורדה
+  const blob = new Blob([JSON.stringify(supplier, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `${supplier.name || 'supplier'}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+
+  // מילוי שדה טופס בשם הספק
+  document.getElementById("supplierInput").value = supplier.name;
+
+  // סגירת כרטיס ספק
+  document.getElementById("supplierCard").classList.add("hidden");
+
+  // הודעה למשתמש
+  alert("ספק נשמר בהצלחה");
 });
 
 
