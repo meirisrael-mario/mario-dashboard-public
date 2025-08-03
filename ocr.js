@@ -130,4 +130,12 @@ dropZone.addEventListener("drop", e => {
   e.preventDefault();
   dropZone.classList.remove("bg-blue-50");
   handleFile(e.dataTransfer.files);
+document.addEventListener("DOMContentLoaded", () => {
+  const plusBtn = document.querySelector("button.text-green-600");
+  const supplierCard = document.getElementById("supplierCard");
+
+  plusBtn.addEventListener("click", () => {
+    supplierCard.classList.toggle("hidden");
+  });
 });
+
